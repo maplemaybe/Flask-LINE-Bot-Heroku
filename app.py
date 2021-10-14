@@ -40,9 +40,9 @@ def handle_message(event):
     reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
     line_bot_api.reply_message(event.reply_token, reply)
 
-    record_list = prepare_record(get_message)
-    reply_list = TextSendMessage(text=line_insert_record(record_list))
-    line_bot_api.reply_message(event.reply_token, reply_list)
+    #record_list = prepare_record(get_message)
+    #reply_list = TextSendMessage(text=line_insert_record(record_list))
+    #line_bot_api.reply_message(event.reply_token, reply_list)
 
 
 
