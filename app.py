@@ -45,7 +45,7 @@ def handle_message(event):
     reply_list = TextSendMessage(text=line_insert_record(record_list))
     #line_bot_api.reply_message(event.reply_token, reply_list)
     reply_arr.append(reply)
-    reply_arr.append(record_list)
+    reply_arr.append(reply_list)
     line_bot_api.reply_message(event.reply_token, reply_arr )
 
 
