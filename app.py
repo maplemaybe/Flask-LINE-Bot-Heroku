@@ -1,7 +1,7 @@
+
 import os
-import psycopg2
-import datetime
 from datetime import datetime
+import psycopg2
 
 from flask import Flask, abort, request
 
@@ -46,14 +46,14 @@ def handle_message(event):
 
 
 
-
+'''
 def prepare_record(text):
     text_list = text.split('\n')
     
     month = text_list[0].split(' ')[0].split('/')[0]
     day = text_list[0].split(' ')[0].split('/')[1]
     d = datetime.date(datetime.date.today().year, int(month), int(day))
-   
+
     record_list = []
     
     time_format = '%H:%M'
@@ -92,7 +92,7 @@ def line_insert_record(record_list):
     conn.close()
     
     return message
-
+'''
 
 if __name__ == "__main__":
     app.run()
