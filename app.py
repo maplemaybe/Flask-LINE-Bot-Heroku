@@ -1,4 +1,6 @@
 import os
+import psycopg2
+import datetime
 from datetime import datetime
 
 from flask import Flask, abort, request
@@ -12,7 +14,6 @@ app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 handler = WebhookHandler(os.environ.get("CHANNEL_SECRET"))
-
 
 @app.route("/", methods=["GET", "POST"])
 def callback():
@@ -38,6 +39,60 @@ def handle_message(event):
     # Send To Line
     reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
     line_bot_api.reply_message(event.reply_token, reply)
+
+    record_list = prepare_record(get_message)
+    reply_list = TextSendMessage(text=line_insert_record(record_list))
+    line_bot_api.reply_message(event.reply_token, reply_list)
+
+
+
+
+def prepare_record(text):
+    text_list = text.split('\n')
+    
+    month = text_list[0].split(' ')[0].split('/')[0]
+    day = text_list[0].split(' ')[0].split('/')[1]
+    d = datetime.date(datetime.date.today().year, int(month), int(day))
+   
+    record_list = []
+    
+    time_format = '%H:%M'
+    
+    for i in text_list[1:]:
+        temp_list = i.split(' ')
+        
+        temp_name = temp_list[0]
+        temp_training = temp_list[1]
+        
+        temp_start = datetime.datetime.strptime(temp_list[2].split('-')[0], time_format)
+        temp_end = datetime.datetime.strptime(temp_list[2].split('-')[1], time_format)
+        temp_duration = temp_end - temp_start
+        
+        record = (temp_name, temp_training, temp_duration, d)
+        record_list.append(record)
+        
+    return record_list
+
+def line_insert_record(record_list):
+    DATABASE_URL = os.environ['DATABASE_URL']
+
+    conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+    cursor = conn.cursor()
+
+    table_columns = '(alpaca_name, training, duration, date)'
+    postgres_insert_query = f"""INSERT INTO alpaca_training {table_columns} VALUES (%s,%s,%s,%s)"""
+
+    cursor.executemany(postgres_insert_query, record_list)
+    conn.commit()
+
+    message = f"恭喜您！ {cursor.rowcount} 筆資料成功匯入 alpaca_training 表單！"
+    print(message)
+
+    cursor.close()
+    conn.close()
+    
+    return message
+
 
 if __name__ == "__main__":
     app.run()
