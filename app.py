@@ -37,16 +37,16 @@ def handle_message(event):
     get_message = event.message.text
 
     # Send To Line
-    reply_arr=[]
-    reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
+    #reply_arr=[]
+    #reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
     #line_bot_api.reply_message(event.reply_token, reply)
 
     record_list = prepare_record(get_message)
     reply_list = TextSendMessage(text=line_insert_record(record_list))
     #line_bot_api.reply_message(event.reply_token, reply_list)
-    reply_arr.append(reply)
-    reply_arr.append(reply_list)
-    line_bot_api.reply_message(event.reply_token, reply_arr )
+    #reply_arr.append(reply)
+    #reply_arr.append(reply_list)
+    line_bot_api.reply_message(event.reply_token, reply_list)
 
 
 def prepare_record(text):
@@ -77,8 +77,10 @@ def prepare_record(text):
 
 def line_insert_record(record_list):
     DATABASE_URL = os.environ['DATABASE_URL']
-
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+    message = f"DATABASE為 {DATABASE_URL} ！"
+    '''
     cursor = conn.cursor()
 
     table_columns = '(alpaca_name, training, duration, date)'
@@ -92,7 +94,7 @@ def line_insert_record(record_list):
 
     cursor.close()
     conn.close()
-    
+    '''
     return message
 
 

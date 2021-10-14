@@ -2,8 +2,14 @@ import os
 import psycopg2
 
 DATABASE_URL = os.popen('heroku config:get DATABASE_URL -a fishlinebot').read()[:-1]
+print(DATABASE_URL)
+#print(os.environ['DATABASE_URL'])
+#DATABASE_URL = os.environ.get("DATABASE_URL")
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+
+'''
 cursor = conn.cursor()
 
 cursor.execute("SELECT * FROM alpaca_training;")#選擇資料表userdata
@@ -13,3 +19,5 @@ for row in rows:   #將讀到的資料全部print出來
     print("Data row = (%s, %s, %s)" %(str(row[0]), str(row[1]), str(row[2])))
     
 conn.commit()
+
+'''
