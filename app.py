@@ -1,7 +1,7 @@
 
 import os
 from datetime import datetime
-#import psycopg2
+import psycopg2
 
 from flask import Flask, abort, request
 
