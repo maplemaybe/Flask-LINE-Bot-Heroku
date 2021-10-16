@@ -1,6 +1,6 @@
 
 import os
-from datetime import datetime
+import datetime
 import psycopg2
 
 from flask import Flask, abort, request
@@ -34,8 +34,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    get_message = event.message.text
-
+    #get_message = event.message.text
     # Send To Line
     #reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
     #line_bot_api.reply_message(event.reply_token, reply)
@@ -52,9 +51,11 @@ def handle_message(event):
             )
                 
         except:
+
+            record_list = prepare_record(event.message.text)
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text='失敗了')
+                TextSendMessage(text=record_list +'失敗了')
             )
 
 
@@ -65,7 +66,7 @@ def prepare_record(text):
     month = text_list[0].split(' ')[0].split('/')[0]
     day = text_list[0].split(' ')[0].split('/')[1]
     d = datetime.date(datetime.date.today().year, int(month), int(day))
-
+   
     record_list = []
     
     time_format = '%H:%M'
@@ -89,8 +90,6 @@ def line_insert_record(record_list):
     DATABASE_URL = os.environ['DATABASE_URL']
     conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
-    #message = f"DATABASE為 {DATABASE_URL} ！"
-    
     cursor = conn.cursor()
 
     table_columns = '(alpaca_name, training, duration, date)'
