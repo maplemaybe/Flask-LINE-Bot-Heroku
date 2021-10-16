@@ -37,16 +37,26 @@ def handle_message(event):
     get_message = event.message.text
 
     # Send To Line
-    #reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
-    #line_bot_api.reply_message(event.reply_token, reply)
+    reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
+    line_bot_api.reply_message(event.reply_token, reply)
+    
+    if '草泥馬訓練紀錄' in event.message.text:
+        
+        try:
+            record_list = prepare_record(event.message.text)
+            reply = line_insert_record(record_list)
 
-    #DATABASE_URL = os.environ['DATABASE_URL']
-    #conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-    #line_bot_api.reply_message(event.reply_token, reply)   
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=reply)
+            )
+                
+        except:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text='失敗了')
+            )
 
-    record_list = prepare_record(get_message)
-    reply_list = TextSendMessage(text="你說的是不是："+line_insert_record(record_list))
-    line_bot_api.reply_message(event.reply_token, reply_list)
 
 
 def prepare_record(text):
