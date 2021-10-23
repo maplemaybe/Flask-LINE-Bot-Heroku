@@ -41,7 +41,7 @@ def reply_text_message(event):
     reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
     line_bot_api.reply_message(event.reply_token, reply)
 
-    '''
+    
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         reply = False
 
@@ -60,7 +60,7 @@ def reply_text_message(event):
         # 裝飾過的回音機器人
         if not reply:
             reply = PhoebeTalks.pretty_echo(event)
-    '''
+    
 
 '''
 @handler.add(MessageEvent, message=TextMessage)
