@@ -36,25 +36,25 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def reply_text_message(event):
     
-    if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
+    #if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
         
-        reply = False
-
-        # 將資料存入表格中 
-        if not reply:
-            reply = PhoebeTalks.insert_record(event)
-        
-        # 發送 FlexMessage
-        if not reply:
-            reply = PhoebeFlex.img_search_flex(event)
-        
-        # 幫忙上網找圖
-        if not reply:
-            reply = PhoebeTalks.img_search(event)
-        
-        # 裝飾過的回音機器人
-        if not reply:
-            reply = PhoebeTalks.pretty_echo(event)
+        #reply = False
+    reply = True
+    # 將資料存入表格中 
+    if not reply:
+        reply = PhoebeTalks.insert_record(event)
+    
+    # 發送 FlexMessage
+    if not reply:
+        reply = PhoebeFlex.img_search_flex(event)
+    
+    # 幫忙上網找圖
+    if not reply:
+        reply = PhoebeTalks.img_search(event)
+    
+    # 裝飾過的回音機器人
+    if not reply:
+        reply = PhoebeTalks.pretty_echo(event)
 
 
 '''
