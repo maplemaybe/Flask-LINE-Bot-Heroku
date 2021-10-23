@@ -41,7 +41,11 @@ def img_search_flex(event):
             #contents = utils.prepare_img_search_flex(event.message.text[5:], translate, random_img_url)
             translate = '測試文字'
             random_img_url = 'https://ithelp.ithome.com.tw/articles/10221693'
-            contents = utils.prepare_img_search_flex(event.message.text[5:], translate, random_img_url)
+            flexContent = []
+            for i in range(5):
+                singleContents = utils.prepare_img_search_flex(event.message.text[5:], translate, random_img_url)
+                flexContent.append(singleContents.copy())
+            contents = utils.prepare_mulitiple_flex(flexContent)
             line_bot_api.reply_message(
                 event.reply_token,
                 FlexSendMessage(

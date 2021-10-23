@@ -122,3 +122,12 @@ def prepare_img_search_flex(text, translate, random_img_url):
                }
               }
     return contents    
+
+def prepare_mulitiple_flex(flexContent):
+    contents = {
+                "type": "carousel",
+                "contents": []
+    }
+    contents['contents'] = flexContent
+
+    return contents
