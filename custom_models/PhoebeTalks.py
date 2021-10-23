@@ -13,10 +13,11 @@ import random
 from custom_models import utils, CallDatabase
 
 # LINE 聊天機器人的基本資料
-config = configparser.ConfigParser()
-config.read('config.ini')
+#config = configparser.ConfigParser()
+#config.read('config.ini')
 
-line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
+#line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
+line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 
 # 請 LINE 聊天機器人幫我們存入訓練資料
 def insert_record(event):

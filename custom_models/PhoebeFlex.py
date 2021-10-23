@@ -3,16 +3,17 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import FlexSendMessage
 
 import configparser
-
+import os
 import re
 
 # 引入我們的套件
 from custom_models import utils
 
-config = configparser.ConfigParser()
-config.read('config.ini')
+#config = configparser.ConfigParser()
+#config.read('config.ini')
 
-line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
+#line_bot_api = LineBotApi(config.get('line-bot', 'channel_access_token'))
+line_bot_api = LineBotApi(os.environ.get("CHANNEL_ACCESS_TOKEN"))
 
 # LINE 提供的 FlexMessage 範例
 sample = {
