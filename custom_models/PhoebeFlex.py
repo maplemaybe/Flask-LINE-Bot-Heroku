@@ -36,11 +36,12 @@ def img_search_flex(event):
         
         try:
         
-            translate = utils.get_translate(event.message.text[5:])
-            random_img_url = utils.get_img_url(img_source='pixabay', target=translate)
-
+            #translate = utils.get_translate(event.message.text[5:])
+            #random_img_url = utils.get_img_url(img_source='pixabay', target=translate)
+            #contents = utils.prepare_img_search_flex(event.message.text[5:], translate, random_img_url)
+            translate = '測試文字'
+            random_img_url = 'https://ithelp.ithome.com.tw/articles/10221693'
             contents = utils.prepare_img_search_flex(event.message.text[5:], translate, random_img_url)
-
             line_bot_api.reply_message(
                 event.reply_token,
                 FlexSendMessage(
