@@ -36,10 +36,10 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def reply_text_message(event):
 
-    get_message = event.message.text
+    #get_message = event.message.text
     # Send To Line
-    reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
-    line_bot_api.reply_message(event.reply_token, reply)
+    #reply = TextSendMessage(text= "你說的是不是："+ f"{get_message}")
+    #line_bot_api.reply_message(event.reply_token, reply)
 
     
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
